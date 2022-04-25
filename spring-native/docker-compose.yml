@@ -1,0 +1,8 @@
+version: "3"
+services:
+
+  native-web:
+    image: spring-native:0.0.1-SNAPSHOT
+    container_name: native
+    ports:
+      - "8080:8080"
