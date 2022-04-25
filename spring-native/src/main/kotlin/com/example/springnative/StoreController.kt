@@ -11,8 +11,8 @@ import javax.validation.Valid
 @RequestMapping
 class StoreController(private val storeDao: StoreDao) {
     @GetMapping
-    suspend fun get(@Valid storeQuery: StoreQuery): MutableList<Store> {
-        return storeDao.findAll(storeQuery.toSpecification())
+    fun get(@Valid storeQuery: StoreQuery): MutableList<Store> {
+        return storeDao.findAll()
     }
 
     @PostMapping
