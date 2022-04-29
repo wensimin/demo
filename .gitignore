@@ -6,7 +6,4 @@
 /.idea
 /*.iml
 /kotlin-17/kotlin-17.iml
-/out/production/kotlin-17/META-INF/kotlin-17.kotlin_module
-/out/production/kotlin-17/StringBufferTestKt$main$1.class
-/out/production/kotlin-17/StringBufferTestKt$main$write$1.class
-/out/production/kotlin-17/StringBufferTestKt.class
+/out
