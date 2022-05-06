@@ -14,7 +14,9 @@ class WebSocketController : WebSocketHandler {
         val logger = Logger()
         return webSocketSession.send(logger.flux()
             .map { webSocketSession.textMessage(it) }
-            .doOnComplete { println("flux complete") })
+            // 目前的api不支持send中嵌套close 见 https://github.com/reactor/reactor-netty/issues/478
+            .doOnComplete { throw RuntimeException() })
+            .onErrorResume { webSocketSession.close() }
             .and(
                 webSocketSession.receive().log()
                     .map { it.payloadAsText }
