@@ -20,5 +20,5 @@ fun main() {
             )
             .then()
     }
-        .block(Duration.ofSeconds(10L))
+        .block(Duration.ofSeconds(20L))
 }
