@@ -1,4 +1,11 @@
 logging:
   level:
-    org.hibernate.SQL: debug
-#    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org:
+      springframework:
+        r2dbc: debug
+
+spring:
+  r2dbc:
+    url: 'r2dbc:postgresql://192.168.0.200:5433/r2dbc'
+    username: 'postgres'
+    password: 'dev-password'

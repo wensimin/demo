@@ -1,6 +1,9 @@
 package com.example.springnative
 
-import com.github.wensimin.jpaspecplus.findBySpec
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.reactive.asFlow
+import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
+import org.springframework.data.r2dbc.core.flow
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -10,18 +13,30 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping
-class StoreController(private val storeDao: StoreDao) {
+class StoreController(
+    private val storeDao: StoreDao,
+    private val r2dbcEntityTemplate: R2dbcEntityTemplate
+) {
     @GetMapping
-    fun get(@Valid storeQuery: StoreQuery): MutableList<Store> {
-        return storeDao.findBySpec(storeQuery)
+    suspend fun get(@Valid storeQuery: StoreQuery): Flow<Store> {
+        return storeDao.findAll().asFlow()
     }
+
+    @GetMapping("simple")
+    suspend fun getSimple(@Valid storeQuery: StoreQuery): Flow<SimpleStore> {
+        return r2dbcEntityTemplate.select(Store::class.java).`as`(SimpleStore::class.java).flow()
+    }
+
 
     @GetMapping("query")
     fun getQuery(storeQuery: StoreQuery) = storeQuery
 
     @PostMapping
-    suspend fun add() {
-        listOf(Store(1, UUID.randomUUID().toString()), Store(2, UUID.randomUUID().toString()))
-            .forEach { storeDao.save(it) }
+    suspend fun add(): Flow<Store> {
+        val data = mutableListOf<Store>()
+        repeat(100) {
+            data.add(Store(null, UUID.randomUUID().toString()))
+        }
+        return storeDao.saveAll(data).asFlow()
     }
 }

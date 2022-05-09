@@ -1,6 +1,9 @@
 package com.example.springnative
 
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 
-interface StoreDao : JpaRepository<Store, Long>, JpaSpecificationExecutor<Store>
+import org.springframework.data.repository.reactive.ReactiveCrudRepository
+import reactor.core.publisher.Flux
+
+interface StoreDao : ReactiveCrudRepository<Store, Long> {
+    fun findBy(): Flux<SimpleStore>
+}

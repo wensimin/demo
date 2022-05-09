@@ -1,11 +1,14 @@
 package com.example.springnative
 
-import javax.persistence.Entity
-import javax.persistence.Id
+import org.springframework.data.annotation.Id
 
-@Entity
-class Store(
+
+data class Store(
     @Id
-    val id: Long,
+    var id: Long?,
     val value: String
+)
+
+data class SimpleStore(
+    val id: Long
 )
