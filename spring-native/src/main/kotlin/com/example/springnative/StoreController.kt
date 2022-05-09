@@ -1,10 +1,11 @@
 package com.example.springnative
 
+import com.github.wensimin.jpaspecplus.findBySpec
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID
+import java.util.*
 import javax.validation.Valid
 
 @RestController
@@ -12,7 +13,7 @@ import javax.validation.Valid
 class StoreController(private val storeDao: StoreDao) {
     @GetMapping
     fun get(@Valid storeQuery: StoreQuery): MutableList<Store> {
-        return storeDao.findAll(storeQuery.toSpecification())
+        return storeDao.findBySpec(storeQuery)
     }
 
     @GetMapping("query")

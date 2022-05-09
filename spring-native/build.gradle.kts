@@ -31,6 +31,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("com.github.wensimin:jpa-spec-plus:0.1")
     testImplementation("io.projectreactor:reactor-test")
 }
 
