@@ -3,7 +3,7 @@ package com.example.springnative
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.reactive.asFlow
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
-import org.springframework.data.r2dbc.core.flow
+import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -15,7 +15,8 @@ import javax.validation.Valid
 @RequestMapping
 class StoreController(
     private val storeDao: StoreDao,
-    private val r2dbcEntityTemplate: R2dbcEntityTemplate
+    private val r2dbcEntityTemplate: R2dbcEntityTemplate,
+    private val databaseClient: DatabaseClient
 ) {
     @GetMapping
     suspend fun get(@Valid storeQuery: StoreQuery): Flow<Store> {
@@ -24,7 +25,8 @@ class StoreController(
 
     @GetMapping("simple")
     suspend fun getSimple(@Valid storeQuery: StoreQuery): Flow<SimpleStore> {
-        return r2dbcEntityTemplate.select(Store::class.java).`as`(SimpleStore::class.java).flow()
+//        return r2dbcEntityTemplate.select(SimpleStore::class.java).from(Store::class.simpleName!!).flow()
+        return storeDao.findBy().asFlow()
     }
 
 
