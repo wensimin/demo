@@ -14,8 +14,6 @@ import javax.sql.DataSource
 @SpringBootApplication
 class KtormApplication {
     @Bean
-//    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    //https://youtrack.jetbrains.com/issue/IDEA-264916 暂时等待解决方案
     fun database(dataSource: DataSource): Database {
         return Database.connectWithSpringSupport(dataSource, logger = ConsoleLogger(LogLevel.DEBUG))
     }
